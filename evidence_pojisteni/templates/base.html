@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Evidence pojištění</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href=" {% static '/evidence_pojisteni/style.css' %} ">
+    <link rel="stylesheet" href=" {% static '/evidence_pojisteni/grid.css' %} ">
+    <link rel="stylesheet" href=" {% static '/evidence_pojisteni/all.css' %} ">
+</head>
+
+<body>
+    <header id="header">
+        <nav>
+            <input type="checkbox" id="check">   
+            <label for="check" class="checkbtn">
+                <i class="fa-solid fa-bars"></i>
+            </label>   
+            <label class="logo"><span>Evidence</span>APP</label>
+            <ul>
+                <li><a class="active" href="{% url 'home' %}">Klienti</a></li>
+                <li><a href="#">Produkty</a></li>
+                <li><a href="{% url 'create_klient' %}" id="kontaktbtn">Přidat klienta</a></li>
+            </ul>
+        </nav> 
+    </header>
+    <main id="centrovac" class="content">
+        
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        {% block content %}
+
+        {% endblock %}
+    </main>
+    <footer>
+        <p>Copyright © 2023 <a href="{% url 'home' %}">evidence pojisteni</a></p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Jste si jisti, že chcete smazat daného klienta?</h2>
+<h3>{{ klient }}</h3>
+
+<form action="{% url 'delete_klient' klient.id %}" method="POST">
+    {% csrf_token %}
+    <a class="tlacitko1 tlacitko" onclick="history.back()">Nechci smazat</a>
+    <input type="submit" name="Confirm ">
+</form>
+
+{% endblock %}

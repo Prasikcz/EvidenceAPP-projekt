@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Seznam klientů</h2>
+
+    <form method="get">
+        {{klientFilter.form}}
+        <input type="submit">
+    </form>
+    <p><a href="{% url 'home' %}">Vyčistit filtr</a></p>
+
+    <table id="klienti">
+        <tr>
+            <th>Rodné číslo</th>
+            <th>Jméno a příjmení</th>
+            <th>Adresa</th>
+            <th></th>
+        </tr>
+        {% for klient in klienti %}
+        <tr>
+            <td>{{ klient.rodne_cislo }}</td>
+            <td>{{ klient.jmeno }} {{ klient.prijmeni }}</a></td>
+            <td>{{ klient.ulice}} {{klient.cislo_popisne}}, {{ klient.mesto }}  {{ klient.psc }}</td>
+            <td>
+                <a class="tlacitko tlacitko2" href="{% url 'klient' klient.id %}">detail</a>  
+                <a class="tlacitko tlacitko1" href="{% url 'update_klient' klient.id %}">edit</a>  
+                <a class="tlacitko tlacitko3" href="{% url 'delete_klient' klient.id %}">smazat</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

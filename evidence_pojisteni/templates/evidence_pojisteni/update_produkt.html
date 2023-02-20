@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h2> {{ produkt.klient }} </h2>
+<h3>Editace produktu - {{produkt.nazev_produktu}}:</h3>
+<p>Předmět produktu: {{produkt.predmet}}</p>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" name="POST">
+</form>
+<p><button class="tlacitko1 tlacitko" onclick="history.back()">Zavřít a zrušit změny</button></p>
+
+{% endblock %}
