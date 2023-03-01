@@ -11,6 +11,10 @@
 </head>
 
 <body>
+    <div class="user_panel">
+        <span>Uživatel: {{request.user}}</span>
+        <span><a href="{% url 'logout' %}">Odhlásit se</a></span>
+    </div>  
     <header id="header">
         <nav>
             <input type="checkbox" id="check">   

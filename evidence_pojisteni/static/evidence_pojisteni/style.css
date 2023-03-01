@@ -24,6 +24,15 @@ p {
 
 /*Hlavička*/
 
+.user_panel {
+    max-width: 960px;
+    text-align: end;
+    color: #2d2d2d;
+    font-size: 0.85em;
+    font-weight: 200;
+    margin: 0.15em auto;
+}
+
 #header {
     background-color: #00386b;
     height: 80px;

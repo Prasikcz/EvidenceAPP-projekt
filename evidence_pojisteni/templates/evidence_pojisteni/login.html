@@ -63,6 +63,12 @@
 			outline: 0px !important;
 		}
 
+        #messages{
+			background-color: rgb(255, 255, 255);
+			color: #353535;
+			padding: 10px;
+			margin-top: 10px;
+		}
 	</style>
 
 </head>
@@ -97,7 +103,11 @@
 					</form>
 
 				</div>
-		
+
+                {% for message in messages %}
+                    <p id="messages">{{ message }}</p>
+                {% endfor %}
+
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
 						<div style="color:white">Nemáte u nás založený účet?</div> <a href="{% url 'register' %}" class="ml-2">Registrovat se</a>
