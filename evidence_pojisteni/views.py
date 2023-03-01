@@ -1,10 +1,27 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.forms import UserCreationForm
 from .models import *
-from .forms import KlientForm, ProduktForm, ProduktFormUpgrade
+from .forms import KlientForm, ProduktForm, ProduktFormUpgrade, CreateUserForm
 from .filters import KlientFilter
 from django.contrib import messages
 # Create your views here.
+
+def registerPage(request):
+    form = CreateUserForm
+
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+
+    context = {'form':form}
+    return render(request, 'evidence_pojisteni/register.html', context)
+
+def loginPage(request):
+    context = {}
+    return render(request, 'evidence_pojisteni/login.html', context)
 
 def index(request):
     #Způsob rendrování a filtrace dat na hlavní stránce
