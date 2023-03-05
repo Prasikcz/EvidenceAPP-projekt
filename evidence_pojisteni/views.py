@@ -4,53 +4,61 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 
 # Create your views here.
 from .models import *
 from .forms import KlientForm, ProduktForm, ProduktFormUpgrade, CreateUserForm
 from .filters import KlientFilter
+from .decorators import unauthenticated_user, allowed_users, admin_only
 
+
+@unauthenticated_user
 def registerPage(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    else:
-        form = CreateUserForm
-        if request.method == 'POST':
-            form = CreateUserForm(request.POST)
-            if form.is_valid():
-                form.save()
-                user = form.cleaned_data.get('username')
-                messages.success(request, f'Registrace uživatele {user} proběhla úspěšně')
+    form = CreateUserForm
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+
+            group = Group.objects.get(name='klient')
+            user.groups.add(group)
+            Klient.objects.create(
+                user=user,
+            )
+
+            messages.success(request, f'Registrace uživatele {username} proběhla úspěšně')
             return redirect("login")
 
 
     context = {'form':form}
     return render(request, 'evidence_pojisteni/register.html', context)
 
+@unauthenticated_user
 def loginPage(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
 
-            user = authenticate(request, username = username, password = password)
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-            else:
-                messages.info(request, 'Uživatelské jméno nebo heslo není správné')
+        user = authenticate(request, username = username, password = password)
 
-        context = {}
-        return render(request, 'evidence_pojisteni/login.html', context)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.info(request, 'Uživatelské jméno nebo heslo není správné')
+
+    context = {}
+    return render(request, 'evidence_pojisteni/login.html', context)
 
 def logoutUser(request):
     logout(request)
     return redirect('login')
 
 @login_required(login_url='login')
+@admin_only
 def index(request):
     #Způsob rendrování a filtrace dat na hlavní stránce
     klienti = Klient.objects.all().order_by("-id")
@@ -62,7 +70,19 @@ def index(request):
     return render(request, 'evidence_pojisteni/index.html', context)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['klient'])
+def userPage(request):
+    produkty = request.user.klient.produkty_set.all()
+    produkty_celkem = produkty.count()
+    klient = request.user.klient
+    context = {'produkty':produkty, 'produkty_celkem':produkty_celkem, 'klient':klient}
+    print(produkty)
+    return render(request, 'evidence_pojisteni/user.html', context)
+
+
 @login_required(login_url='login') 
+@allowed_users(allowed_roles=['admin'])
 def klient(request, pk):
     #Metoda sloučící v detailu klienta, podle níž se vypisují údaje o klientovi a jeho produktech
     klient = Klient.objects.get(pk=pk)
@@ -72,6 +92,7 @@ def klient(request, pk):
     return render(request, 'evidence_pojisteni/klient.html', context)
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def createKlient(request):
     #Metoda vyvolávající formulář k vytvoření klienta a jeho následné uložení do db
     form = KlientForm
@@ -104,6 +125,7 @@ def updateKlient(request, pk):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def deleteKlient(request, pk):
     #Metoda sloužící k vymazání klienta z db a navrácení na hlavní stránku
     klient = Klient.objects.get(pk=pk)
@@ -121,6 +143,7 @@ def deleteKlient(request, pk):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def createProdukt(request, pk):
     #Metoda vyvolávající formulář k vytvoření produktu daného klienta a následného uložení do db
     klient = Klient.objects.get(pk=pk)
@@ -145,6 +168,7 @@ def produkt(request, pk):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def updateProdukt(request, pk):
     #Metoda sloužící k úpravě údajů klienta pomocí formuláře
     produkt = Produkty.objects.get(pk=pk)
@@ -163,6 +187,7 @@ def updateProdukt(request, pk):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def deleteProdukt(request, pk):
     #Metoda sloužící k vymazání klienta z db a navrácení na hlavní stránku
     produkt = Produkty.objects.get(pk=pk)
@@ -173,3 +198,9 @@ def deleteProdukt(request, pk):
         return redirect("home")
 
     return render(request, 'evidence_pojisteni/delete_produkt.html', context)
+
+@login_required(login_url='login')
+def produkty(request):
+    #Metoda sloužící k vymazání klienta z db a navrácení na hlavní stránku
+    return render(request, 'evidence_pojisteni/produkty.html')
+

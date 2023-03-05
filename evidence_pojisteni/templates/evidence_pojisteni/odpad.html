@@ -1,0 +1,35 @@
+<h2>Produkty</h2>
+{% for produkty in produkty %}
+
+<h3>{{ produkty.nazev_produktu }} ({{produkty.status}})</h3>
+<span id="more">
+    <section class="section">
+        <div class="col span-1-of-2">
+            <p>Předmět: {{ produkty.predmet }}</p>
+            <p>Částka :{{ produkty.castka }} Kč</p>
+        </div>
+        <div class="col span-1-of-2">
+            <p>Doba trvání smlouvy: {{ produkty.doba_trvani }}</p>
+            <p>Platnost od: {{ produkty.platnost_od }}</p>
+        </div>
+    </section>  
+</span>
+<button type="button" id="read" onclick="read()">Zobrazit detaily</button>
+<script type="text/javascript">
+    var i=0;
+    function read(){
+        if(!i){
+            document.getElementById("more").style.
+                display = "inline";
+            document.getElementById("read").innerHTML="Zavřít detail"
+            i=1;
+        }
+        else{
+            document.getElementById("more").style.
+                display = "none";
+            document.getElementById("read").innerHTML="Zobrazit detaily"
+            i=0;
+        }
+
+    }
+</script>

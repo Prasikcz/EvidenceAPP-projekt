@@ -6,9 +6,10 @@ urlpatterns = [
     path('register/',views.registerPage, name='register'),
     path('login/',views.loginPage, name='login'),
     path('logout/',views.logoutUser, name='logout'),
-
+    path('user/', views.userPage, name="user_page"),
 
     path('', views.index, name='home'),
+    path('produkty', views.produkty, name='produkty'),
     path('klient/<str:pk>', views.klient, name='klient'),
     path('produkt/<str:pk>', views.produkt, name='produkt'),
     path('create_produkt/<str:pk>', views.createProdukt, name='create_produkt'),

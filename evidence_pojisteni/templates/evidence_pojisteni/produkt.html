@@ -14,9 +14,11 @@
             <p>Doba trvání smlouvy: {{ produkty.doba_trvani }}</p>
             <p>Platnost od: {{ produkty.platnost_od }}</p>
         </div>
-    </section>  
+    </section>
+    {% if request.user.is_staff %}  
     <a class="tlacitko tlacitko1" href="{% url 'update_produkt' produkty.id %}">edit</a>  
     <a class="tlacitko tlacitko3" href="{% url 'delete_produkt' produkty.id %}">smazat</a>
+    {% endif %}
     <p><button onclick="history.back()">Zpět na detail klienta {{produkty.klient}}</button></p>
     
 {% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Pojištění majetku</h2>
+    <span id="more">
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+            Soluta alias ipsam voluptates dicta quidem possimus error esse, 
+            rerum neque voluptatibus perspiciatis, in aliquam inventore magnam repellat. 
+            Distinctio repudiandae corporis pariatur.
+        </p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+            Soluta alias ipsam voluptates dicta quidem possimus error esse, 
+            rerum neque voluptatibus perspiciatis, in aliquam inventore magnam repellat. 
+            Distinctio repudiandae corporis pariatur.
+        </p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+            Soluta alias ipsam voluptates dicta quidem possimus error esse, 
+            rerum neque voluptatibus perspiciatis, in aliquam inventore magnam repellat. 
+            Distinctio repudiandae corporis pariatur.
+        </p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+            Soluta alias ipsam voluptates dicta quidem possimus error esse, 
+            rerum neque voluptatibus perspiciatis, in aliquam inventore magnam repellat. 
+            Distinctio repudiandae corporis pariatur.
+        </p>
+    </span>
+    <button type="button" id="read" onclick="read()">Zobrazit více</button>
+
+<h2>Cestovní pojištění</h2>
+<script type="text/javascript">
+    var i=0;
+    function read(){
+        if(!i){
+            document.getElementById("more").style.
+                display = "inline";
+            document.getElementById("read").innerHTML="Zavřít detail"
+            i=1;
+        }
+        else{
+            document.getElementById("more").style.
+                display = "none";
+            document.getElementById("read").innerHTML="Zobrazit detaily"
+            i=0;
+        }
+
+    }
+</script>
+{% endblock %}

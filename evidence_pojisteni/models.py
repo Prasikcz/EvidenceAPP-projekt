@@ -1,36 +1,13 @@
 from django.db import models
-from django.core.exceptions import ValidationError
-
-# Sada metod, které snižují riziko, že budou do db zadány chybné údaje
-def psc(value):
-    #metoda, která zajišťuje, že budou zadány pouze celá čísla do PSČ
-    if len(value) != 5 or value.isdigit()==False:
-         raise ValidationError('Lze zadávat pouze čísla ve formátu [59101]')
-
-    
-def rodne_cislo(value): 
-    #metoda, která zajišťuje, že budou zadány pouze celá čísla do RČ
-    if value.isdigit()==False or len(value)<9:
-        raise ValidationError('Lze zadávat pouze čísla ve formátu [5566771234]')  
-
-def only_int(value): 
-    #metoda, která zajišťuje, že budou zadány pouze celá čísla do RČ
-    if value.isdigit()==False:
-        raise ValidationError('Lze zadat pouze kladné číslo') 
-
-
-def telefon(value): 
-    #metoda, která zajišťuje, že budou zadány pouze celá čísla do TEL.
-    if value.isdigit()==False:
-        raise ValidationError('Lze zadávat pouze čísla ve formátu [732205105]')
-
+from django.contrib.auth.models import User
+from .entry_conditions import *
 
 
 
 class Klient(models.Model):
 
     #Třída reprezentující klienta pojišťovny
-
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     jmeno = models.CharField(max_length=200, null=True, verbose_name='Jméno')
     prijmeni = models.CharField(max_length=180, null=True, verbose_name='Příjmení')
     rodne_cislo = models.CharField(max_length=10, validators=[rodne_cislo], null=True, unique=True, verbose_name='Rodné číslo')
@@ -41,6 +18,7 @@ class Klient(models.Model):
     e_mail = models.EmailField(max_length=120, null=True, unique=True, verbose_name='E-mail')
     telefon = models.CharField(max_length=9,validators=[telefon], null=True, unique=True, verbose_name='Telefon')
     date_created = models.DateTimeField(auto_now_add=True, null=True, verbose_name='Datum registrace')
+
 
     def __str__(self):
         return  f"{self.jmeno} {self.prijmeni} RČ: {self.rodne_cislo}"
