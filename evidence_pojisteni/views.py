@@ -13,10 +13,10 @@ from .forms import KlientForm, ProduktForm, ProduktFormUpgrade, CreateUserForm, 
 from .filters import KlientFilter
 from .decorators import unauthenticated_user, allowed_users, admin_only
 
-
+"""Část view, která se zaměřuje na registraci uživatelů a jejich účtů"""
 @unauthenticated_user
 def registerPage(request):
-
+# Metoda pro základní registraci uživatele (regisrace je nezbytnou podmínkou pro přihlášení do aplikace)
     user_form = CreateUserForm()
     if request.method == 'POST':
         user_form = CreateUserForm(request.POST)
@@ -32,7 +32,7 @@ def registerPage(request):
 
 @unauthenticated_user
 def loginPage(request):
-
+# Metoda pro přihlášení uživatele.
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -52,12 +52,14 @@ def loginPage(request):
     return render(request, 'evidence_pojisteni/login.html', context)
 
 def logoutUser(request):
+# metoda sloužící k odhlášení uživatelů z aplikace
     logout(request)
     return redirect('login')
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['klient'])
 def updateUser(request):
+# metoda sloužící k dokončení registrace po prvním přihlášení
     klient = request.user.klient
     klient_form = KlientUserForm(instance=klient)
     if request.method == 'POST':
@@ -73,7 +75,7 @@ def updateUser(request):
 @login_required(login_url='login')
 @admin_only
 def index(request):
-    #Způsob rendrování a filtrace dat na hlavní stránce
+# Způsob rendrování a filtrace dat na hlavní stránce
     klienti = Klient.objects.all().order_by("-id")
     produkty = Produkty.objects.all().order_by("-id")
     klientFilter = KlientFilter(request.GET, queryset=klienti)
@@ -86,6 +88,7 @@ def index(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['klient'])
 def userPage(request):
+# metoda zobrazující profil klienta, včetně jeho údajů a uzavřených produktů
     produkty = request.user.klient.produkty_set.all()
     produkty_celkem = produkty.count()
     klient = request.user.klient
@@ -167,7 +170,7 @@ def createProdukt(request, pk):
 
     form = ProduktForm(initial={'klient':klient})
     if request.method == 'POST':
-        form = ProduktForm(request.POST)
+        form = ProduktForm(request.POST, initial={'klient':klient})
         if form.is_valid():
             form.save()
             messages.success(request, 'Produkt byl úspěšně vytvořen')

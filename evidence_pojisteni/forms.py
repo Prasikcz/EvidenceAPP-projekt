@@ -15,6 +15,7 @@ class ProduktForm(ModelForm):
     class Meta:
         model = Produkty
         fields = '__all__'
+
         
 
 class ProduktFormUpgrade(ModelForm):
