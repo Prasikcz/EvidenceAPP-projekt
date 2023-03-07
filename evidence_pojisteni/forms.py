@@ -9,7 +9,7 @@ class KlientForm(ModelForm):
     class Meta:
         model = Klient
         fields = '__all__'
-        exlude = 'user'
+        exclude = ['user']
 
 class ProduktForm(ModelForm):
     class Meta:
@@ -32,4 +32,6 @@ class KlientUserForm(forms.ModelForm):
     class Meta:
         model = Klient
         fields = ['rodne_cislo', 'ulice', 'cislo_popisne', 'mesto', 'psc', 'telefon']
+
+
         

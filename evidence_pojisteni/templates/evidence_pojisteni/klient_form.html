@@ -10,5 +10,98 @@
 </form>
 <p><button class="tlacitko1 tlacitko" onclick="history.back()">Zavřít a zrušit formulář</button></p>
 
+<div class="container h-100">
+    <div class="d-flex justify-content-center h-100">
+        <div class="user_card">
+            <div class="d-flex justify-content-center">
+                <h3 id="form-title">Registrace klienta</h3><br/>
+            </div>
+            <div class="d-flex justify-content-center form_container">
+
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        {{ klient_form.jmeno }}
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        {{ klient_form.prijmeni }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        </div>
+                        {{ klient_form.rodne_cislo }}
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        {{ klient_form.ulice }}
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        {{ klient_form.cislo_popisne }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-building"></i></span>
+                        </div>
+                        {{ klient_form.mesto }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        {{ klient_form.psc }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        </div>
+                        {{ klient_form.telefon }}
+                    </div>
+                    
+                       <div class="d-flex justify-content-center mt-3 login_container">
+                         <input class="btn login_btn" type="submit" value="Dokončit registraci">
+                       </div>
+                </form>
+            </div>
+
+            <div style="color:white">{{ form.errors }}</div>
+
+            <div class="mt-4">
+                <div class="d-flex justify-content-center links">
+                    <div style="color:white">Zpět na přihlášení<a href="{% url 'login' %}" >Zpět</a></div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+                    
+
+    //Query All input fields
+    var form_fields = document.getElementsByTagName('input')
+    form_fields[1].placeholder='Rodné číslo...';
+    form_fields[2].placeholder='Ulice...';
+    form_fields[3].placeholder='Číslo popisné...';
+    form_fields[4].placeholder='Město...';
+    form_fields[5].placeholder='PSČ...';
+    form_fields[6].placeholder='Telefon...';
+
+
+    for (var field in form_fields){	
+        form_fields[field].className += ' form-control'
+    }
+</script>
+
 
 {% endblock %}

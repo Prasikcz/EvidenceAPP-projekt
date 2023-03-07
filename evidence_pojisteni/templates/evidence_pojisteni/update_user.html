@@ -53,7 +53,7 @@
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+								<span class="input-group-text"><i class="fas fa-building"></i></span>
 							</div>
 							{{ klient_form.mesto }}
 						</div>
@@ -65,13 +65,13 @@
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-key"></i></span>
+								<span class="input-group-text"><i class="fas fa-phone"></i></span>
 							</div>
 							{{ klient_form.telefon }}
 						</div>
 						
 				   		<div class="d-flex justify-content-center mt-3 login_container">
-				 			<input class="btn login_btn" type="submit" value="Registrovat se">
+				 			<input class="btn login_btn" type="submit" value="Dokončit registraci">
 				   		</div>
 					</form>
 				</div>
@@ -80,7 +80,7 @@
 
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
-						<div style="color:white">Již máte u nás založený účet?</div> <a href="{% url 'login' %}" class="ml-2">Přihlásit se</a>
+						<div style="color:white">Zpět na přihlášení<a href="{% url 'login' %}" >Zpět</a></div> 
 					</div>
 				</div>
 			</div>

@@ -89,6 +89,10 @@ def userPage(request):
     produkty = request.user.klient.produkty_set.all()
     produkty_celkem = produkty.count()
     klient = request.user.klient
+    if klient.rodne_cislo is None:
+        logout(request)
+        return redirect('login')
+
     context = {'produkty':produkty, 'produkty_celkem':produkty_celkem, 'klient':klient}
     print(produkty)
     return render(request, 'evidence_pojisteni/user.html', context)
@@ -108,15 +112,15 @@ def klient(request, pk):
 @allowed_users(allowed_roles=['admin'])
 def createKlient(request):
     #Metoda vyvolávající formulář k vytvoření klienta a jeho následné uložení do db
-    form = KlientForm
+    klient_form = KlientForm
     if request.method == 'POST':
-        form = KlientForm(request.POST)
-        if form.is_valid():
-            form.save()
+        klient_form = KlientForm(request.POST)
+        if klient_form.is_valid():
+            klient_form.save()
             messages.success(request, 'Klient byl úspěšně vytvořen')
             return redirect("home")
 
-    context = {'form':form}
+    context = {'form':klient_form}
     return render(request, 'evidence_pojisteni/klient_form.html', context)
 
 
