@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'evidence_pojisteni',
+    'evidence_pojisteni.apps.EvidencePojisteniConfig',
     'crispy_forms',
     'django_filters',
 ]

@@ -4,6 +4,7 @@ from .entry_conditions import *
 
 
 
+
 class Klient(models.Model):
 
     #Třída reprezentující klienta pojišťovny
@@ -19,6 +20,7 @@ class Klient(models.Model):
     telefon = models.CharField(max_length=9,validators=[telefon], null=True, unique=True, verbose_name='Telefon')
     date_created = models.DateTimeField(auto_now_add=True, null=True, verbose_name='Datum registrace')
 
+   
 
     def __str__(self):
         return  f"{self.jmeno} {self.prijmeni} RČ: {self.rodne_cislo}"
@@ -26,6 +28,7 @@ class Klient(models.Model):
     class Meta:
             verbose_name="Klient"
             verbose_name_plural="Klienti"
+
 
 
 class Produkty(models.Model):

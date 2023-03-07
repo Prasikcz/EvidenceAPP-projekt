@@ -29,10 +29,11 @@
                 {% endif %}
 
                 {% url 'produkty' as produkty_url %}
-                <li><a class="{% if request.path == produkty_url %}active{% endif %}" href="{% url 'produkty' %}">Produkty pojišťovny</a></li>
-
+                <li><a class="{% if request.path == produkty_url %}active{% endif %}" href="{% url 'produkty' %}">Sjednat produkt</a></li>
+                
                 {% url 'user_page' as user_url %}
                 <li><a class="{% if request.path == user_url %}active{% endif %}" href="{% url 'user_page' %}">Váš profil</a></li>
+                
 
                 {% if request.user.is_staff %}
                 {% url 'create_klient' as create_klient_url %}

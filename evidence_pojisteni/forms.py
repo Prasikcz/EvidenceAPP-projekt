@@ -26,4 +26,10 @@ class ProduktFormUpgrade(ModelForm):
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+
+class KlientUserForm(forms.ModelForm):
+    class Meta:
+        model = Klient
+        fields = ['rodne_cislo', 'ulice', 'cislo_popisne', 'mesto', 'psc', 'telefon']
+        

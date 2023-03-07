@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
     
-    <h2>{{ klient.jmeno }} {{ klient.prijmeni }} RČ: {{ klient.rodne_cislo }}  </h2>
+    <h2>{{ klient.jmeno }} {{ klient.prijmeni }} RČ: {{ klient.rodne_cislo|default_if_none:'' }} <span class="tlacitko tlacitko1">upravit/vyplnit profil</span> </h2>
         <section class="section">
             <div class="col span-1-of-2">
                 <h3>Adresa trvalého bydliště</h3>
-                <p>{{ klient.ulice }} {{ klient.cislo_popisne }}</p>
-                <p>{{ klient.psc }}  {{klient.mesto}}</p>
+                <p>{{ klient.ulice|default_if_none:'' }} {{ klient.cislo_popisne|default_if_none:'' }}</p>
+                <p>{{ klient.psc|default_if_none:'' }}  {{klient.mesto|default_if_none:''}}</p>
             </div>
             <div class="col span-1-of-2">
                 <h3>Kontakt na pojištěnce</h3>
-                <p>+420 {{ klient.telefon }} </p>
-                <p>{{ klient.e_mail }}</p>
+                <p>+420 {{ klient.telefon|default_if_none:'' }} </p>
+                <p>{{ klient.e_mail|default_if_none:'' }}</p>
             </div>
         </section> 
                     

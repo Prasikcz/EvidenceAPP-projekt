@@ -5,34 +5,29 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
+from django.db import transaction
 
 # Create your views here.
 from .models import *
-from .forms import KlientForm, ProduktForm, ProduktFormUpgrade, CreateUserForm
+from .forms import KlientForm, ProduktForm, ProduktFormUpgrade, CreateUserForm, KlientUserForm
 from .filters import KlientFilter
 from .decorators import unauthenticated_user, allowed_users, admin_only
 
 
 @unauthenticated_user
 def registerPage(request):
-    form = CreateUserForm
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data.get('username')
 
-            group = Group.objects.get(name='klient')
-            user.groups.add(group)
-            Klient.objects.create(
-                user=user,
-            )
+    user_form = CreateUserForm()
+    if request.method == 'POST':
+        user_form = CreateUserForm(request.POST)
+        if user_form.is_valid():
+            user_form.save()
+            username = user_form.cleaned_data.get('username')
 
             messages.success(request, f'Registrace uživatele {username} proběhla úspěšně')
             return redirect("login")
 
-
-    context = {'form':form}
+    context = {'form':user_form}
     return render(request, 'evidence_pojisteni/register.html', context)
 
 @unauthenticated_user
@@ -44,7 +39,10 @@ def loginPage(request):
 
         user = authenticate(request, username = username, password = password)
 
-        if user is not None:
+        if user.klient.rodne_cislo is None:
+            login(request, user)
+            return redirect('update_user')
+        elif user is not None:
             login(request, user)
             return redirect('home')
         else:
@@ -56,6 +54,21 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('login')
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['klient'])
+def updateUser(request):
+    klient = request.user.klient
+    klient_form = KlientUserForm(instance=klient)
+    if request.method == 'POST':
+        klient_form = KlientUserForm(request.POST, instance=klient)
+        if klient_form.is_valid():
+            klient_form.save()
+            return redirect("home")
+
+    context = {'klient':klient, 'klient_form':klient_form}
+    return render(request, 'evidence_pojisteni/update_user.html', context)
+
 
 @login_required(login_url='login')
 @admin_only
