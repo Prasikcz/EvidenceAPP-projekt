@@ -313,3 +313,52 @@ button:hover {
     background-color: #ff6128;
     cursor: pointer;
   }
+
+/* FORMULÁŘE */
+
+
+
+.registration-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 400px;
+    border-radius: 5px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: #00386b;
+    margin: 0 auto;
+    
+}
+
+.registration-form h3 {
+    display: flex;
+    justify-content: center;
+    text-align: center;  
+    color: white;
+}
+
+.registration-form p {
+    margin: 15px 0;
+    color: white;
+    max-width: 350px;
+    
+}
+
+.registration-form input {
+    padding: 15px 10px;
+    width: 100%;
+    border: 0;
+    border-radius: 5px;
+    outline: none;
+}
+
+.registration-form button {
+    font-weight: bold;
+    margin: 20px 0;
+    padding: 10px 15px;
+    width: 50%;
+    border: 0;
+    border-radius: 5px;
+    background-color: #ea3616;
+}
