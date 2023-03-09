@@ -1,14 +1,81 @@
 {% extends "base.html" %}
 {% block content %}
-
 <h2>Vytvoření klienta</h2>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" name="POST">
-</form>
-<p><button class="tlacitko1 tlacitko" onclick="history.back()">Zavřít a zrušit formulář</button></p>
+<div class="container-form">
+    <form method="POST" action="">
+        {% csrf_token %}
+        
+        <p>Jméno:</p>
+        <div class="django-input">
+            {{ form.jmeno }}
+        </div>
+
+        <p>Příjmení:</p>
+        <div class="django-input">
+            {{ form.prijmeni }}
+        </div>
+
+        <p>Rodné číslo:</p>
+        <div class="django-input">
+            {{ form.rodne_cislo }}
+        </div>
+
+        <p>Ulice:</p>
+        <div class="django-input">
+            {{ form.ulice }}
+        </div>
+
+        <p>Číslo popisné:</p>
+        <div class="django-input">
+            {{ form.cislo_popisne }}
+        </div>
+
+        <p>PSČ:</p>
+        <div class="django-input">
+            {{ form.psc }}
+        </div>
+
+        <p>Město:</p>
+        <div class="django-input">
+            {{ form.mesto }}
+        </div>
+
+        <p>E-mail:</p>
+        <div class="django-input">
+            {{ form.e_mail }}
+        </div>
+
+        <p>Telefon:</p>
+        <div class="django-input">
+            {{ form.telefon }}
+        </div>
+        <p>
+           
+            <input type="submit" class="tlacitko tlacitko2" value="Uložit klienta">
+        
+        </p>
+    </form>
+   
+</div>
+<button class="tlacitko1 tlacitko" onclick="history.back()">Zavřít a zrušit formulář</button>
+<script>
+						
+
+    //Query All input fields
+    var form_fields = document.getElementsByTagName('input')
+    form_fields[2].placeholder='Jméno...';
+    form_fields[3].placeholder='Příjmení...';
+    form_fields[4].placeholder='Rodné číslo...';
+    form_fields[5].placeholder='Ulice...';
+    form_fields[6].placeholder='Číslo popisné...';
+    form_fields[7].placeholder='PSČ...';
+    form_fields[8].placeholder='Město...';
+    form_fields[9].placeholder='E-mail...';
+    form_fields[10].placeholder='Telefon...';
 
 
-
+    for (var field in form_fields){	
+        form_fields[field].className += ' form-control'
+    }
+</script>
 {% endblock %}
